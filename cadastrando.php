@@ -24,10 +24,11 @@
             $confirmacao;
             $conflito;
             
-            $query = mysqli_query($conn,"SELECT * FROM usuario WHERE email_usuario='$email'") or die(
-                    myslqi_error($conn)
-                );
-            if(mysqli_num_rows($query) > 0){
+            $cmd = "SELECT * FROM `login` WHERE `email_usuario`='$email'";
+            $result = mysqli_query($cmd);
+            $rows = mysqli_num_rows($result);
+
+            if(mysqli_num_rows($rows) > 0){
                 $conflito=1;
                 echo "O email já está sendo utilizado por outro usuário";
             }
@@ -46,7 +47,7 @@
             }
            
             if($confirmacao===1 && $conflito===0){
-                $sql="INSERT INTO usuario(nome_usuario, sbnome_usuario, email_usuario, senha_usuario)
+                $sql="INSERT INTO login(nome_usuario, sbnome_usuario, email_usuario, senha_usuario)
                     VALUES('$nome', '$sbnome', '$email', '$senha')";
                 
                 if ($conn->query($sql) === TRUE) {
